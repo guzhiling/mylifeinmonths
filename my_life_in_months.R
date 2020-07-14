@@ -38,7 +38,7 @@ life_data <- expand_grid(
   group_by(year) %>%
   mutate(month_number = row_number()) %>%
   ungroup() %>%
-  filter(!(year == 1995 & month_number < 11))
+  filter(!(year == 1995 & month_number < 9))
 
 ## Add "eras" to be coloured ----
 life_data <- life_data %>%
@@ -46,12 +46,12 @@ life_data <- life_data %>%
   mutate(year_month = paste0(c(year, month_number), collapse = ",")) %>%
   ungroup() %>%
   mutate(era = case_when(
-    year_month == "1995,11" ~ "Childhood",
+    year_month == "1995,9" ~ "Childhood",
     year_month == "2010,9" ~ "High School",
     year_month == "2013,9" ~ "Undergraduate",
     year_month == "2017,9" ~ "Master",
     year_month == "2019,8" ~ "PhD",
-    year_month == "2065,11" ~ "70YearsOld"
+    year_month == "2065,9" ~ "70YearsOld"
   )) %>%
   fill(era) %>%
   mutate(era = fct_inorder(era))
@@ -112,5 +112,5 @@ life_in_months_final <- life_in_months_role_annotations +
   annotate("text", x = 22, y = 14, label = "moved to US", family = role_annotations_font_family, size = annotation_base_size, lineheight = annotation_lineheight, colour = location_colour) +
   geom_curve(aes(x = 23.5, xend = 24, y = 13.5, yend = 12.6), curvature = -0.3, arrow = arrow(length = unit(0.0175, "npc")), colour = location_colour)
 
-ggsave("life_in_months.png", plot = life_in_months_final, device = "png", type = "cairo", width = 25, height = 15, dpi = 300)
+ggsave("life_in_months.png", plot = life_in_months_final, device = "png", type = "cairo", width = 25, height = 8, dpi = 300)
 
